@@ -9,6 +9,18 @@ import { CiMicrophoneOn } from "react-icons/ci";
 import { FiPlay } from "react-icons/fi";
 import { useState } from "react";
 import IconButton from "@/components/iconButton";
+interface CoursProps {
+  title: string;
+  description: string;
+}
+function CoursDescription({ title, description }: CoursProps) {
+  return (
+    <div>
+      <p className="text-3xl font-bold">{title}</p>
+      <p className="text-gray-500">{description}</p>
+    </div>
+  );
+}
 export default function Home() {
   const navigation = [
     { name: "Cours", href: "#" },
@@ -63,7 +75,11 @@ export default function Home() {
               ))}
             </ul>
 
-            <IconButton Icon={IoIosMenu} label="Menu" onClick={() => setIsOpen(true)} />
+            <IconButton
+              Icon={IoIosMenu}
+              label="Menu"
+              onClick={() => setIsOpen(true)}
+            />
 
             <Button label="Commencer" />
           </div>
@@ -102,65 +118,61 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="bg-gray-100 p-10 flex rounded-[30px] flex-col md:flex-row gap-4">
+        <div className="bg-gray-100 p-6 md:p-10 flex rounded-[30px] flex-col md:flex-row gap-4">
           <div className="basis-full md:basis-1/4 flex flex-col">
             <p className="text-xl font-bold">
-              Empower Yourelf with knowledge. Anytime, Anywhere
+            Donnez-vous les moyens d&apos;acquérir des connaissances, à tout moment et en tout lieu
             </p>
-            <div className="w-fit">
-              <Button label="Explore more About us" outline />
+            <div className="w-fit mt-2">
+              <Button label="Voir plus" outline />
             </div>
           </div>
-          <div className="bg-white flex flex-row justify-between items-center gap-4 p-10 basis-full md:basis-3/4 rounded-[30px]">
-            <div>
-              <p className="text-3xl font-bold">200+</p>
-              <p className="text-gray-500">Cours en ligne</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold">80K+</p>
-              <p className="text-gray-500">Etudiants actifs</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold">50+</p>
-              <p className="text-gray-500">Enseignants qualifiés</p>
-            </div>
+          <div className="bg-white flex flex-col md:flex-row justify-between m-0 items-left gap-4 p-6 md:p-10 basis-full md:basis-3/4 rounded-[30px] ">
+
+              <CoursDescription title="200+" description="Cours en ligne" />
+              <CoursDescription title="80K+" description="Etudiants actifs" />
+              <CoursDescription
+                title="50+"
+                description="Enseignants qualifiés"
+              />
+
           </div>
         </div>
       </section>
       {isOpen && (
-  <div className="fixed inset-0 z-10 animate-slide-in px-4 md:px-20 py-4 bg-white shadow-sm">
-    {/* Header du menu */}
-    <div className="flex justify-between items-center border-b border-gray-200 gap-8">
-    <h1 className="text-lg font-bold">
+        <div className="fixed inset-0 z-10 animate-slide-in px-4 md:px-20 py-4 bg-white shadow-sm">
+          {/* Header du menu */}
+          <div className="flex justify-between items-center border-b border-gray-200 gap-8">
+            <h1 className="text-lg font-bold">
               <span>Learnosity</span>
             </h1>
-      <IconButton Icon={IoCloseOutline} label="Fermer" onClick={() => setIsOpen(false)} />
-    </div>
+            <IconButton
+              Icon={IoCloseOutline}
+              label="Fermer"
+              onClick={() => setIsOpen(false)}
+            />
+          </div>
 
-    {/* Contenu du menu */}
-    <div className="flex flex-col">
-      <ul className="divide-y divide-gray-200">
-        {navigation.map((item, index) => (
-          <li
-            key={index}
-            className="text-sm text-gray-700 font-medium hover:text-gray-900 transition py-4"
-          >
-            <a href={item.href} className="block">
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <div className="p-6 border-t border-gray-200">
-        <Button
-          label="Commencer"
-        />
-      </div>
-    </div>
-  </div>
-)}
-
-
+          {/* Contenu du menu */}
+          <div className="flex flex-col">
+            <ul className="divide-y divide-gray-200">
+              {navigation.map((item, index) => (
+                <li
+                  key={index}
+                  className="text-sm text-gray-700 font-medium hover:text-gray-900 transition py-4"
+                >
+                  <a href={item.href} className="block">
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="p-6 border-t border-gray-200">
+              <Button label="Commencer" />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
