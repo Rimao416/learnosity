@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div className="app">
-      <section className="sm:px-6 md:px-20 py-4 bg-white shadow-sm">
+      <section className="px-4 md:px-20 py-4 bg-white shadow-sm">
         <div className="flex flex-wrap justify-between items-center w-full md:w-auto">
           {/* Logo et barre de recherche */}
           <div className="flex items-center gap-8 flex-wrap">
@@ -49,7 +49,7 @@ export default function Home() {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center gap-6 mt-4 md:mt-0">
+          <div className="flex items-center gap-6">
             <ul className="hidden md:flex">
               {navigation.map((item, index) => (
                 <li
@@ -71,7 +71,7 @@ export default function Home() {
 
         {/* Contenu principal */}
         <div className="flex flex-col-reverse md:flex-row items-center justify-between my-8 gap-6">
-          <div className="md:basis-1/2 text-center md:text-left">
+          <div className="md:basis-1/2 text-left">
             <p className="text-4xl md:text-5xl font-bold leading-tight">
               <span className="text-primary">Développez</span> vos compétences
               et faites progresser{" "}
@@ -82,7 +82,7 @@ export default function Home() {
               promouvoir vos cours en ligne. Commencez à monétiser vos
               compétences, vos expériences et votre public.
             </p>
-            <div className="mt-8 flex flex-col md:flex-row items-center gap-4">
+            <div className="mt-8 flex flex-row items-center gap-4">
               <Button label="S'inscrire" />
               <div className="flex items-center justify-center gap-2">
                 <Icon Icon={FiPlay} size={20} />
@@ -102,8 +102,8 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="bg-gray-100 p-10 flex rounded-[30px]">
-          <div className="basis-1/4 flex flex-col gap-4">
+        <div className="bg-gray-100 p-10 flex rounded-[30px] flex-col md:flex-row gap-4">
+          <div className="basis-full md:basis-1/4 flex flex-col">
             <p className="text-xl font-bold">
               Empower Yourelf with knowledge. Anytime, Anywhere
             </p>
@@ -111,7 +111,7 @@ export default function Home() {
               <Button label="Explore more About us" outline />
             </div>
           </div>
-          <div className="bg-white flex flex-col md:flex-row justify-between items-center gap-4 p-10 basis-3/4 rounded-[30px]">
+          <div className="bg-white flex flex-row justify-between items-center gap-4 p-10 basis-full md:basis-3/4 rounded-[30px]">
             <div>
               <p className="text-3xl font-bold">200+</p>
               <p className="text-gray-500">Cours en ligne</p>
@@ -128,18 +128,13 @@ export default function Home() {
         </div>
       </section>
       {isOpen && (
-  <div className="fixed inset-0 bg-white z-10 animate-slide-in">
+  <div className="fixed inset-0 z-10 animate-slide-in px-4 md:px-20 py-4 bg-white shadow-sm">
     {/* Header du menu */}
-    <div className="flex justify-between items-center p-6 border-b border-gray-200">
-      <h1 className="text-xl font-bold text-gray-800">
-        Learnosity
-      </h1>
-      <button
-        className="text-gray-600 hover:text-gray-800"
-        onClick={() => setIsOpen(false)}
-      >
-        <IoCloseOutline size={28} />
-      </button>
+    <div className="flex justify-between items-center border-b border-gray-200 gap-8">
+    <h1 className="text-lg font-bold">
+              <span>Learnosity</span>
+            </h1>
+      <IconButton Icon={IoCloseOutline} label="Fermer" onClick={() => setIsOpen(false)} />
     </div>
 
     {/* Contenu du menu */}
@@ -148,7 +143,7 @@ export default function Home() {
         {navigation.map((item, index) => (
           <li
             key={index}
-            className="text-lg text-gray-700 font-medium hover:text-gray-900 transition p-6"
+            className="text-sm text-gray-700 font-medium hover:text-gray-900 transition py-4"
           >
             <a href={item.href} className="block">
               {item.name}
