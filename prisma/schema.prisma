@@ -12,3 +12,26 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Professor {
+  id      Int      @id @default(autoincrement())
+  name    String
+  courses Course[] // Relation avec les cours
+}
+
+model Category {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  courses Course[] // Relation avec les cours
+}
+
+model Course {
+  id          Int    @id @default(autoincrement())
+  title       String
+  professorId Int
+  categoryId  Int
+
+  // Relations
+  professor Professor @relation(fields: [professorId], references: [id], onDelete: Cascade)
+  category  Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}

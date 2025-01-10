@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Sora } from "next/font/google";
+import QueryProvider from "./queryProvider";
 
-// Initialisation de la police Sora
 const sora = Sora({
   subsets: ["latin"],
-  weight: ["400", "700"], // Ajouter les variantes nécessaires
-  variable: "--font-sora", // Variable CSS personnalisée
+  weight: ["400", "700"],
+  variable: "--font-sora",
 });
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={sora.variable}>
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

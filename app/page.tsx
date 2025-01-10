@@ -9,6 +9,8 @@ import { CiMicrophoneOn } from "react-icons/ci";
 import { FiPlay } from "react-icons/fi";
 import { useState } from "react";
 import IconButton from "@/components/iconButton";
+import { useCoursesByCategory } from "@/features/courses/hooks/useCoursesByCategory";
+import { useCategories } from "@/features/courses/hooks/useCategories";
 interface CoursProps {
   title: string;
   description: string;
@@ -22,6 +24,13 @@ function CoursDescription({ title, description }: CoursProps) {
   );
 }
 export default function Home() {
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+
+  const {
+    data: categories,
+    isLoading: isLoadingCategories,
+    error: errorCategories,
+  } = useCategories();
   const navigation = [
     { name: "Cours", href: "#" },
     { name: "Solution", href: "#" },
@@ -29,6 +38,22 @@ export default function Home() {
     { name: "Connexion", href: "#" },
   ];
   const [isOpen, setIsOpen] = useState(false);
+  const {
+    data: courses,
+    isLoading: isLoadingCourses,
+    error: errorCourses,
+  } = useCoursesByCategory(
+    selectedCategory || 0 // Par défaut, aucune catégorie sélectionnée
+  );
+
+  // Mettre à jour la catégorie sélectionnée par défaut lorsque les catégories sont disponibles
+  if (!selectedCategory && categories?.length) {
+    setSelectedCategory(categories[0].id);
+  }
+
+  // Affichage des erreurs ou du chargement
+  if (isLoadingCategories) return <p>Chargement des catégories...</p>;
+  if (errorCategories) return <p>Erreur lors du chargement des catégories.</p>;
 
   return (
     <div className="app">
@@ -121,22 +146,58 @@ export default function Home() {
         <div className="bg-gray-100 p-6 md:p-10 flex rounded-[30px] flex-col md:flex-row gap-4">
           <div className="basis-full md:basis-1/4 flex flex-col">
             <p className="text-xl font-bold">
-            Donnez-vous les moyens d&apos;acquérir des connaissances, à tout moment et en tout lieu
+              Donnez-vous les moyens d&apos;acquérir des connaissances, à tout
+              moment et en tout lieu
             </p>
             <div className="w-fit mt-2">
               <Button label="Voir plus" outline />
             </div>
           </div>
           <div className="bg-white flex flex-col md:flex-row justify-between m-0 items-left gap-4 p-6 md:p-10 basis-full md:basis-3/4 rounded-[30px] ">
-
-              <CoursDescription title="200+" description="Cours en ligne" />
-              <CoursDescription title="80K+" description="Etudiants actifs" />
-              <CoursDescription
-                title="50+"
-                description="Enseignants qualifiés"
-              />
-
+            <CoursDescription title="200+" description="Cours en ligne" />
+            <CoursDescription title="80K+" description="Etudiants actifs" />
+            <CoursDescription title="50+" description="Enseignants qualifiés" />
           </div>
+        </div>
+      </section>
+      <section>
+        <div>
+          {/* Liste des catégories */}
+          <select
+            value={selectedCategory || ""}
+            onChange={(e) => setSelectedCategory(Number(e.target.value))}
+            className="mb-4 p-2 border border-gray-300 rounded"
+          >
+            {categories?.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+
+          {/* Affichage des cours */}
+          {isLoadingCourses ? (
+            <p>Chargement des cours...</p>
+          ) : errorCourses ? (
+            <p>Erreur lors du chargement des cours.</p>
+          ) : (
+            <div>
+              {courses?.length ? (
+                courses.map((course) => (
+                  <div
+                    key={course.id}
+                    className="mb-4 p-4 border rounded shadow"
+                  >
+                    <h3 className="text-xl font-bold">{course.title}</h3>
+                    <p>{course.category.name}</p>
+                    <p>{course.professor.name}</p>
+                  </div>
+                ))
+              ) : (
+                <p>Aucun cours disponible pour cette catégorie.</p>
+              )}
+            </div>
+          )}
         </div>
       </section>
       {isOpen && (
