@@ -3,13 +3,14 @@ import { prisma } from "@/lib/db";
 
 export async function GET(
   req: Request,
-  { params }: { params: { categoryId: string } }
+  context: { params: { categoryId: string } }
 ) {
   try {
-    const { categoryId } = params; // On peut directement accéder à `params`
+    const { categoryId } = context.params; // Accéder correctement à `params`
+
     const courses = await prisma.course.findMany({
       where: {
-        categoryId: parseInt(categoryId), // Convertir en nombre si nécessaire
+        categoryId: parseInt(categoryId, 10), // Convertir en nombre
       },
       include: {
         category: true,
