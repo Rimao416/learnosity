@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: { categoryId: string } }
 ) {
   try {
-    const { categoryId } = await params;
+    const { categoryId } = params; // On peut directement accéder à `params`
     const courses = await prisma.course.findMany({
       where: {
         categoryId: parseInt(categoryId), // Convertir en nombre si nécessaire
