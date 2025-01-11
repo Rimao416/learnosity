@@ -163,7 +163,7 @@ export default function Home() {
       </section>
       <section className="py-12 px-4 md:px-20 bg-dark text-white">
         <h2 className="text-3xl font-bold mb-4 text-center">
-          Exploring online courses
+        Découvrir les cours en ligne
         </h2>
         <div className="flex flex-row gap-2 justify-center flex-wrap">
           {categories?.map((category) => (
@@ -197,6 +197,9 @@ export default function Home() {
               )}
             </div>
           )}
+        </div>
+        <div className="flex justify-center">
+          <Button label="Explorer tous les cours" outline />
         </div>
       </section>
       {isOpen && (
