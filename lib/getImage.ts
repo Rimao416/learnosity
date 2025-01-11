@@ -1,15 +1,17 @@
 import { getPlaiceholder } from "plaiceholder";
 
-export const getImage = async (src: string) => {
-  const buffer = await fetch(src).then(async (res) =>
-    Buffer.from(await res.arrayBuffer())
-  );
-  const {
-    metadata: { height, width },
-    ...placeholder
-  } = await getPlaiceholder(buffer, { size: 10 });
-  return {
-    ...placeholder,
-    img: { src, height, width },
-  };
-};
+export default async function getBase64(imageUrl: string) {
+  try {
+    const res = await fetch(imageUrl);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch image ${imageUrl}`);
+    }
+    const buffer = await res.arrayBuffer();
+    const { base64 } = await getPlaiceholder(Buffer.from(buffer));
+    return base64;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+}
