@@ -3,14 +3,22 @@ import { prisma } from "@/lib/db";
 
 export async function GET(
   req: Request,
-  context: { params: { categoryId: string } }
+  { params }: { params: { [key: string]: string | string[] } }
 ) {
   try {
-    const { categoryId } = context.params; // Accéder correctement à `params`
+    const { categoryId } = params; // On peut directement accéder à params
+
+    // Vérifiez que categoryId est une chaîne de caractères
+    if (typeof categoryId !== "string") {
+      return NextResponse.json(
+        { error: "Invalid categoryId" },
+        { status: 400 }
+      );
+    }
 
     const courses = await prisma.course.findMany({
       where: {
-        categoryId: parseInt(categoryId, 10), // Convertir en nombre
+        categoryId: parseInt(categoryId), // Convertir en nombre si nécessaire
       },
       include: {
         category: true,
