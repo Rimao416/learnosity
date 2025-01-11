@@ -7,7 +7,10 @@ export async function GET() {
       include: { category: true, professor: true },
     });
     return NextResponse.json(courses);
-  } catch (error) {
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  } catch {
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

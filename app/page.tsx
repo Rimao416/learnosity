@@ -58,7 +58,7 @@ export default function Home() {
 
   return (
     <div className="app">
-      <section className="my-4 md:my-20 px-4 md:px-20 py-4 bg-white shadow-sm">
+      <section className="my-4 px-4 md:px-20 py-4 bg-white shadow-sm">
         <div className="flex flex-wrap justify-between items-center w-full md:w-auto">
           {/* Logo et barre de recherche */}
           <div className="flex items-center gap-8 flex-wrap">
@@ -189,7 +189,7 @@ export default function Home() {
           ) : errorCourses ? (
             <p>Erreur lors du chargement des cours.</p>
           ) : (
-            <div className="flex flex-row flex-wrap gap-4 my-10">
+            <div className="flex flex-col md:flex-row flex-wrap gap-4 my-10">
               {courses?.length ? (
                 courses.map((course) => <Course key={course.id} {...course} />)
               ) : (
