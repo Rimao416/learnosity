@@ -39,6 +39,7 @@ async function seed() {
       const professor = await prisma.professor.create({
         data: {
           name: professorName,
+          profile: teacherImage.nom,
         },
       });
 
@@ -64,9 +65,10 @@ async function seed() {
         const randomCategory =
           categories[faker.number.int({ min: 0, max: categories.length - 1 })];
 
-        const course = await prisma.course.create({
+        await prisma.course.create({
           data: {
             title: courseTitle,
+            cover: courseImage,
             professorId: professor.id,
             categoryId: randomCategory.id,
           },

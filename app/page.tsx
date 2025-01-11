@@ -11,6 +11,7 @@ import { useState } from "react";
 import IconButton from "@/components/iconButton";
 import { useCoursesByCategory } from "@/features/courses/hooks/useCoursesByCategory";
 import { useCategories } from "@/features/courses/hooks/useCategories";
+import Course from "@/components/course";
 interface CoursProps {
   title: string;
   description: string;
@@ -57,7 +58,7 @@ export default function Home() {
 
   return (
     <div className="app">
-      <section className="px-4 md:px-20 py-4 bg-white shadow-sm">
+      <section className="my-4 md:my-20 px-4 md:px-20 py-4 bg-white shadow-sm">
         <div className="flex flex-wrap justify-between items-center w-full md:w-auto">
           {/* Logo et barre de recherche */}
           <div className="flex items-center gap-8 flex-wrap">
@@ -160,20 +161,27 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
+      <section className="py-12 px-4 md:px-20 bg-dark text-white">
+        <h2 className="text-3xl font-bold mb-4 text-center">
+          Exploring online courses
+        </h2>
+        <div className="flex flex-row gap-2 justify-center flex-wrap">
+          {categories?.map((category) => (
+            <div
+              key={category.id}
+              className={
+                selectedCategory === category.id
+                  ? "bg-primary text-white px-4 py-2 rounded-full cursor-pointer"
+                  : "p-2 border rounded-full shadow cursor-pointer hover:bg-primary hover:text-white transition duration-300 ease-in-out border-gray-100"
+              }
+              onClick={() => setSelectedCategory(category.id)}
+            >
+              <p className="text-sm">{category.name}</p>
+            </div>
+          ))}
+        </div>
         <div>
           {/* Liste des catégories */}
-          <select
-            value={selectedCategory || ""}
-            onChange={(e) => setSelectedCategory(Number(e.target.value))}
-            className="mb-4 p-2 border border-gray-300 rounded"
-          >
-            {categories?.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
 
           {/* Affichage des cours */}
           {isLoadingCourses ? (
@@ -181,18 +189,9 @@ export default function Home() {
           ) : errorCourses ? (
             <p>Erreur lors du chargement des cours.</p>
           ) : (
-            <div>
+            <div className="flex flex-row flex-wrap gap-4 my-10">
               {courses?.length ? (
-                courses.map((course) => (
-                  <div
-                    key={course.id}
-                    className="mb-4 p-4 border rounded shadow"
-                  >
-                    <h3 className="text-xl font-bold">{course.title}</h3>
-                    <p>{course.category.name}</p>
-                    <p>{course.professor.name}</p>
-                  </div>
-                ))
+                courses.map((course) => <Course key={course.id} {...course} />)
               ) : (
                 <p>Aucun cours disponible pour cette catégorie.</p>
               )}

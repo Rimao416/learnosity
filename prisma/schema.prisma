@@ -16,6 +16,7 @@ datasource db {
 model Professor {
   id      Int      @id @default(autoincrement())
   name    String
+  profile String
   courses Course[] // Relation avec les cours
 }
 
@@ -28,6 +29,7 @@ model Category {
 model Course {
   id          Int    @id @default(autoincrement())
   title       String
+  cover       String
   professorId Int
   categoryId  Int
 
